@@ -7,11 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class StudentManager extends Manager{
     private JLabel titleLable, nameLable,dobLable,addressLable,emailLable;
     private JTextField nameField,dobField,addressField,emailField;
-    private JButton okButton, cancleButton;
+    protected HashMap<String,Student> StudentMap;
 
     /**
      * @param title
@@ -39,8 +40,6 @@ public class StudentManager extends Manager{
     dobField = new JTextField();
     addressField = new JTextField();
     emailField = new JTextField();
-    okButton = new JButton("ok");
-    cancleButton = new JButton("Cancle");
     
     JPanel jPanelForMiddle = new JPanel();
     jPanelForMiddle.setLayout(new GridLayout(4,2));
@@ -77,13 +76,16 @@ public class StudentManager extends Manager{
         }else
         if (emailField.getText().trim().length()==0){
             messeage+="\nEmail can not be blank";
-        } else student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
-		
-        if(messeage != ""){
-        	throw new NotPossibleException(messeage);        	
+        } else {
+            student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
+            StudentMap.put(student.getId(),student);
         }
+		
+        if(messeage.length()>0){
+        	throw new NotPossibleException(messeage);        	
+        }  else displayMessage("Create a " + student.toString(),"Create a Student");
          
-        displayMessage("Create a " + student.toString(),"Create a Student");
+//        displayMessage("Create a " + student.toString(),"Create a Student");
         
         
         

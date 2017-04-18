@@ -4,11 +4,13 @@ import courseman2.NotPossibleException;
 import courseman2.model.ElectiveModules;
 import courseman2.model.Modules;
 import courseman2.model.Student;
+import sun.security.pkcs11.Secmod;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -24,10 +26,8 @@ public class ModuleManager extends Manager{
      * @effects initialise <tt>this</tt> with a <tt>gui</tt> using the specified settings
      * and an empty set of objects
      */
-    private JButton cancleButton;
-    private JButton okButton;
+
     private JComboBox moduleBox;
-    private JLabel titlePanle;
     private JLabel nameLable;
     private JLabel semesterLable;
     private JLabel creditsLable;
@@ -37,6 +37,7 @@ public class ModuleManager extends Manager{
     private JTextField creditsField;
     private JTextField deptNameField;
     private JLabel deptName;
+    protected HashMap<String,Modules> ModuleMap;
     public ModuleManager(String title, String titleText, int width, int height, int x, int y) {
         super(title, titleText, width, height, x, y);
     }
@@ -139,6 +140,7 @@ public class ModuleManager extends Manager{
        
         } else if(moduleBox.getSelectedItem().equals("Compulsory")){
         	modules = new Modules(nameField.getText().trim(),Integer.parseInt(semesterField.getText()),Integer.parseInt(creditsField.getText()));
+        	ModuleMap.put(modules.getCode(),modules);
         }
         
 			  

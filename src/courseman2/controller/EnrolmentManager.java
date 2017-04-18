@@ -20,6 +20,8 @@ public class EnrolmentManager extends Manager{
 	private JLabel title,studentLable,moduleLable,internalMark,examMark;
 	private JTextField studentField,moduleField, internalField,examField;
 	private JButton okbutton,cancleButton;
+	private ModuleManager moduleManager;
+	private StudentManager studentManager;
 	public List<Enrolment> list = new ArrayList<Enrolment>();
 
 	/**
@@ -92,13 +94,13 @@ public class EnrolmentManager extends Manager{
 				list_return.add(listtmp);
 			}
 			EasyTable table = new EasyTable(list_return,header);
-			JFrame jFrame = new JFrame("List of the initial Enrollments");
-			jFrame.getContentPane().add(table.getTableHeader(), BorderLayout.PAGE_START);
-			jFrame.setLayout(new BorderLayout());
-			jFrame.getContentPane().add(table,BorderLayout.CENTER);
-			jFrame.setSize(600,400);
-			jFrame.setLocationRelativeTo(null);
-			jFrame.setVisible(true);
+//			JFrame jFrame = new JFrame("List of the initial Enrollments");
+//			jFrame.getContentPane().add(table.getTableHeader(), BorderLayout.PAGE_START);
+//			jFrame.setLayout(new BorderLayout());
+//			jFrame.getContentPane().add(table,BorderLayout.CENTER);
+//			jFrame.setSize(600,400);
+//			jFrame.setLocationRelativeTo(null);
+//			jFrame.setVisible(true);
 		}
 		/**
 		 * @effect
@@ -214,7 +216,29 @@ public class EnrolmentManager extends Manager{
 
 	@Override
 	public Object createObject() throws NotPossibleException {
-		return null;
+		Enrolment enrolment =null;
+		String messeage = "";
+		if (studentField.getText().trim().length()==0){
+			messeage+="\n Student ID can not be blank";
+		}
+		if (moduleField.getText().trim().length()==0){
+			messeage+="\n Module id can not be blank";
+		}
+		if (internalField.getText().trim().length()==0){
+			messeage+="\n Internal Mark can not be blank";
+		}
+		if (examField.getText().trim().length()==0){
+			messeage+="\n Exam Mark can not be blank";
+		}
+		if (messeage.length()!=0){
+			throw  new NotPossibleException(messeage);
+		}else {
+			enrolment = new Enrolment(
+					studentManager.StudentMap.get(studentField.getText().trim()),
+							moduleManager.ModuleMap.get(moduleField.getText().trim()));
+			displayMessage("Created an enrollment","Enrollment Create");
+		}
+		return enrolment;
 	}
 
 	@Override
