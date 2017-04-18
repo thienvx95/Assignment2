@@ -263,7 +263,14 @@ public abstract class AppController implements ActionListener {
     if (cmd.equals("Exit")) {
       exit();
     } else if (cmd.equals("OK")) {
-      // TODO: complete this code
+    	try {
+    		doTask();
+		} catch (Exception e2) {
+			displayErrorMessage(e2.getMessage(),"Error");
+		}  
+    
+    	  
+    	  
     } else if (cmd.equals("Cancel")) {
       // clear the GUI to enter again
       clearGUI();

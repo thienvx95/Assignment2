@@ -58,6 +58,7 @@ public abstract class Manager extends AppController {
   @Override
   public void doTask() throws NotPossibleException {
     // TODO: complete this code        
+		   createObject(); 
   }
   
   /**

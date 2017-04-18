@@ -29,37 +29,19 @@ public class StudentManager extends Manager{
 
     @Override
     protected void createMiddlePanel() {
-    JFrame jFrame = new JFrame();
-        JMenuBar jMenuBar = new JMenuBar();
-        JMenu jMenu = new JMenu("File");
-        jMenuBar.add(jMenu);
-        JMenuItem save = new JMenuItem("Save");
-        JMenuItem exit = new JMenuItem("Exit");
-        jMenu.add(save);
-        jMenu.add(exit);
-    exit.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.exit(0);
-        }
-    });
-    titleLable = new JLabel("Enter Student Detail");
     nameLable = new JLabel("name");
     dobLable = new JLabel("dob");
     addressLable = new JLabel("Address");
     emailLable = new JLabel("Email");
-
+    
+    
     nameField = new JTextField();
     dobField = new JTextField();
     addressField = new JTextField();
     emailField = new JTextField();
     okButton = new JButton("ok");
     cancleButton = new JButton("Cancle");
-    jFrame.setLayout(new GridLayout(3,1));
-    JPanel jPanelForTitle = new JPanel();
-    jPanelForTitle.add(titleLable);
-    jFrame.add(jPanelForTitle);
-
+    
     JPanel jPanelForMiddle = new JPanel();
     jPanelForMiddle.setLayout(new GridLayout(4,2));
     jPanelForMiddle.add(nameLable);
@@ -70,24 +52,20 @@ public class StudentManager extends Manager{
     jPanelForMiddle.add(addressField);
     jPanelForMiddle.add(emailLable);
     jPanelForMiddle.add(emailField);
-    jFrame.add(jPanelForMiddle);
-    cancleButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int i  =JOptionPane.showConfirmDialog(jFrame,"Do you want to cancle this?","Confirm",JOptionPane.YES_NO_OPTION);
-            System.exit(i);
-        }
-    });
-    JPanel jPanelForButton = new JPanel();
-    jPanelForButton.add(okButton);
-    jPanelForButton.add(cancleButton);
-    jFrame.add(jPanelForButton);
-    jFrame.setJMenuBar(jMenuBar);
+     gui.add(jPanelForMiddle,BorderLayout.CENTER);
     }
 
-    private void OkButton(ActionListener actionListener){
-        Student student = null;
+    @Override
+    public void clearGUI() {
+ 
+    	clearGUI((JPanel) gui.getContentPane());
+    }
+
+    @Override
+    public Object createObject() throws NotPossibleException {
+    	Student student = null;
         String messeage = "";
+        
         if(nameField.getText().trim().length()==0){
             messeage+="\n Name field can not be blank";
         }else
@@ -99,17 +77,17 @@ public class StudentManager extends Manager{
         }else
         if (emailField.getText().trim().length()==0){
             messeage+="\nEmail can not be blank";
+        } else student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
+		
+        if(messeage != ""){
+        	throw new NotPossibleException(messeage);        	
         }
-
-    }
-    @Override
-    public void clearGUI() {
-
-    }
-
-    @Override
-    public Object createObject() throws NotPossibleException {
-        return null;
+         
+        displayMessage("Create a " + student.toString(),"Create a Student");
+        
+        
+        
+        return student;
     }
 
     @Override
