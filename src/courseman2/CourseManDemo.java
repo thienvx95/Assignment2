@@ -83,9 +83,9 @@ public class CourseManDemo implements ActionListener {
   public CourseManDemo(String initial){
 		this.initial = initial;
 	    createGUI();
-	    sman = new StudentManager("Manage Student", "Enter Student Details", 500, 500, 300, 200);
+	    sman = new StudentManager("Manage Student", "Enter Student Details", 500, 300, 300, 200);
 	    mman = new ModuleManager("Manage Modules", "Enter Modules Details",500, 300, 300, 200);
-	    eman = new EnrolmentManager("Manage Enrolment", "Enter Enrolment Details",500, 500, 300, 200);
+	    eman = new EnrolmentManager("Manage Enrolment", "Enter Enrolment Details",500, 300, 300, 200);
 	    lhelper = new LogoHelper();
 	  
   }
@@ -267,7 +267,7 @@ public class CourseManDemo implements ActionListener {
    *  {@link #display()}: display the main gui of CourseManDemo instance 
    */
   public static void main(String[] args) {
-    final String initial = "LMD";
+    final String initial = "VXT - TMT";
     CourseManDemo app = new CourseManDemo(initial);
 
     app.startUp();

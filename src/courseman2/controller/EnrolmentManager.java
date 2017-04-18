@@ -140,66 +140,36 @@ public class EnrolmentManager extends Manager{
 
 	@Override
 	protected void createMiddlePanel() {
-	JFrame jFrame = new JFrame();
-	jFrame.setLayout(new GridLayout(3,1));
-	JPanel jPanelforTitle = new JPanel();
-	JPanel jPanelforMiddle = new JPanel();
-	JPanel jPanelforButton = new JPanel();
-    title = new JLabel();
-    title.setText("Enter enrollment details");
-
-    studentLable = new JLabel();
-    studentLable.setText("Student");
-	studentField = new JTextField();
-
-    moduleLable = new JLabel();
-    moduleLable.setText("Module");
-    moduleField = new JTextField();
-
-
-    internalMark = new JLabel();
-    internalMark.setText("Internal Mark");
-    internalField = new JTextField();
-
-    examMark = new JLabel();
-    examMark.setText("Exam Mark");
-    examField = new JTextField();
-
-    okbutton = new JButton();
-    okbutton.setText("Ok");
-    okbutton.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-		}
-
-	});
-    cancleButton = new JButton();
-    cancleButton.setText("Cancle");
-    cancleButton.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			btnCancleClick(e);
-		}
-
-	});
-    jPanelforTitle.add(title);
-    jPanelforMiddle.setLayout(new GridLayout(4,2));
-    jPanelforMiddle.add(studentLable);
-    jPanelforMiddle.add(studentField);
-    jPanelforMiddle.add(moduleLable);
-    jPanelforMiddle.add(moduleField);
-    jPanelforMiddle.add(internalMark);
-    jPanelforMiddle.add(internalField);
-    jPanelforMiddle.add(examMark);
-    jPanelforMiddle.add(examField);
-	jPanelforButton.add(okbutton);
-	jPanelforButton.add(cancleButton);
-	jFrame.add(jPanelforTitle);
-	jFrame.add(jPanelforMiddle);
-	jFrame.add(jPanelforButton);
-
-
+		//student
+	    studentLable = new JLabel("Student");
+		studentField = new JTextField();
+		//module
+	    moduleLable = new JLabel("Module");
+	    moduleField = new JTextField();
+	    //internalMark
+	    internalMark = new JLabel("Internal Mark");
+	    internalField = new JTextField();
+	    //examMark
+	    examMark = new JLabel("Exam Mark");
+	    examField = new JTextField();
+		
+		//jpanel
+        JPanel jPanelForMiddle = new JPanel();
+        jPanelForMiddle.setLayout(new GridLayout(5,2));
+        //add student
+        jPanelForMiddle.add(studentLable);
+        jPanelForMiddle.add(studentField);
+        //add module
+        jPanelForMiddle.add(moduleLable);
+        jPanelForMiddle.add(moduleField);
+        //add internalMark
+        jPanelForMiddle.add(internalMark);
+        jPanelForMiddle.add(internalField);
+        //add examMark
+        jPanelForMiddle.add(examMark);
+        jPanelForMiddle.add(examField);
+        
+        gui.add(jPanelForMiddle);
 	}
 	private void btnOkClicked(ActionEvent event){
 				boolean ExamIsNum = true;
