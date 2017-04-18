@@ -123,13 +123,13 @@ public class EnrolmentManager extends Manager{
 					list_return.add(tmpList);
 				}
 				EasyTable table = new EasyTable(list_return,header);
-				JFrame jFrame = new JFrame("List of the assessed enrollments");
-				jFrame.setLayout(new BorderLayout());
-				jFrame.getContentPane().add(table.getTableHeader(),BorderLayout.PAGE_START);
-				jFrame.getContentPane().add(table,BorderLayout.CENTER);
-				jFrame.setLocationRelativeTo(null);
-				jFrame.setSize(600,400);
-				jFrame.setVisible(true);
+//				JFrame jFrame = new JFrame("List of the assessed enrollments");
+//				jFrame.setLayout(new BorderLayout());
+//				jFrame.getContentPane().add(table.getTableHeader(),BorderLayout.PAGE_START);
+//				jFrame.getContentPane().add(table,BorderLayout.CENTER);
+//				jFrame.setLocationRelativeTo(null);
+//				jFrame.setSize(600,400);
+//				jFrame.setVisible(true);
 			}
 		/**
 		 * @effect

@@ -37,7 +37,8 @@ public class ModuleManager extends Manager{
     private JTextField creditsField;
     private JTextField deptNameField;
     private JLabel deptName;
-    protected HashMap<String,Modules> ModuleMap;
+
+    protected HashMap<String,Modules> ModuleMap = new HashMap<String,Modules>();
     public ModuleManager(String title, String titleText, int width, int height, int x, int y) {
         super(title, titleText, width, height, x, y);
     }
@@ -60,8 +61,8 @@ public class ModuleManager extends Manager{
         //deptName
         deptName = new JLabel("deptName");
         deptNameField = new JTextField();
-        
-       
+
+
         //jpanel
         JPanel jPanelForMiddle = new JPanel();
         jPanelForMiddle.setLayout(new GridLayout(5,2));
@@ -82,36 +83,36 @@ public class ModuleManager extends Manager{
         deptNameField.setVisible(false);
         jPanelForMiddle.add(deptName);
 	    jPanelForMiddle.add(deptNameField);
-       
+
         moduleBox.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				moduleBox = (JComboBox)e.getSource();
 				String choose = (String) moduleBox.getSelectedItem();
-				if(choose == "Elective"){	
+				if(choose == "Elective"){
 //					 jPanelForMiddle.add(deptName);
 //				     jPanelForMiddle.add(deptNameField);
 					  deptName.setVisible(true);
 					  deptNameField.setVisible(true);
-			
+
 				}
 				if(choose == "Compulsory"){
 //					 jPanelForMiddle.remove(deptName);
-//				     jPanelForMiddle.remove(deptNameField);			 
+//				     jPanelForMiddle.remove(deptNameField);
 					 deptName.setVisible(false);
-				     deptNameField.setVisible(false);			 
+				     deptNameField.setVisible(false);
 				}
 				gui.add(jPanelForMiddle,BorderLayout.CENTER);
 			}
 		});
-        
+
         gui.add(jPanelForMiddle,BorderLayout.CENTER);
-     
-        
-        
-        
-        
+
+
+
+
+
     }
 
     @Override
@@ -122,36 +123,40 @@ public class ModuleManager extends Manager{
     @Override
     public Object createObject() throws NotPossibleException {
     	Modules modules = null;
-    	
-        String messeage = "";
-        
+    	boolean check =true;
+        StringBuilder messeage = new StringBuilder();
         if(nameField.getText().trim().length()==0){
-            messeage+="\n Name field can not be blank";
-        }else
+            messeage.append("\n Name field can not be blank");
+            check =false;
+        }
         if (semesterField.getText().trim().length()==0){
-            messeage+="\n Semester field can not be blank";
-        }else
+            messeage.append("\n Semester field can not be blank");
+            check =false;
+        }
         if (creditsField.getText().trim().length()==0){
-            messeage+="\n Credit field can not be blank";
-        } else if(moduleBox.getSelectedItem().equals("Elective")){
+            messeage.append("\n Credit field can not be blank");
+            check =false;
+        }
+        if(moduleBox.getSelectedItem().equals("Elective")){
         	 if (deptNameField.getText().trim().length()==0){
-                 messeage+="\n DeptName field can not be blank";
+                 messeage.append("\n DeptName field can not be blank");
+                 check =false;
              }
-       
+
         } else if(moduleBox.getSelectedItem().equals("Compulsory")){
         	modules = new Modules(nameField.getText().trim(),Integer.parseInt(semesterField.getText()),Integer.parseInt(creditsField.getText()));
         	ModuleMap.put(modules.getCode(),modules);
         }
-        
-			  
-        if(messeage != ""){
-        	throw new NotPossibleException(messeage);        	
+
+
+        if(messeage.length()>0){
+        	throw new NotPossibleException(messeage.toString());
         }
-         
+
         displayMessage("Create a " + modules.toString(),"Create a Module");
-        
-        
-        
+
+
+
         return modules;
     }
 
