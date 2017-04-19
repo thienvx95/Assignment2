@@ -1,5 +1,7 @@
 package courseman2.model;
 
+import java.io.Serializable;
+
 import courseman2.NotPossibleException;
 
 /** @overview The purpose of this program is to allow the students  of a faculty of a
@@ -21,7 +23,8 @@ import courseman2.NotPossibleException;
  * mutable(email)=true/\optional(email)=false
  */
 
-public class Student {
+public class Student implements Serializable{
+	
 	private String id;
 	private String name;
 	private String dob;

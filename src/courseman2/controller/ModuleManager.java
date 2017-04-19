@@ -1,6 +1,7 @@
 package courseman2.controller;
 
 import courseman2.NotPossibleException;
+import courseman2.model.CompulsoryModules;
 import courseman2.model.ElectiveModules;
 import courseman2.model.Modules;
 import courseman2.model.Student;
@@ -136,9 +137,10 @@ public class ModuleManager extends Manager{
         	 if (deptNameField.getText().trim().length()==0){
                  messeage+="\n DeptName field can not be blank";
              }
-       
+        	 
+        	modules = new ElectiveModules(nameField.getText().trim(), Integer.parseInt(semesterField.getText()), Integer.parseInt(creditsField.getText()), deptNameField.getText().trim());
         } else if(moduleBox.getSelectedItem().equals("Compulsory")){
-        	modules = new Modules(nameField.getText().trim(),Integer.parseInt(semesterField.getText()),Integer.parseInt(creditsField.getText()));
+        	modules = new CompulsoryModules(nameField.getText().trim(),Integer.parseInt(semesterField.getText()),Integer.parseInt(creditsField.getText()));
         }
         
 			  

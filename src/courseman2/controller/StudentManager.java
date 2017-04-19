@@ -7,6 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class StudentManager extends Manager{
     private JLabel titleLable, nameLable,dobLable,addressLable,emailLable;
@@ -77,7 +84,11 @@ public class StudentManager extends Manager{
         }else
         if (emailField.getText().trim().length()==0){
             messeage+="\nEmail can not be blank";
-        } else student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
+        } else {
+        	student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
+        	System.out.println(student.toString());
+        	objects.add(student);
+        }
 		
         if(messeage != ""){
         	throw new NotPossibleException(messeage);        	
@@ -92,11 +103,59 @@ public class StudentManager extends Manager{
 
     @Override
     public void save() {
+    	if(this.objects!=null){
+    		System.out.println(this.objects.size());
+			try {
+				FileOutputStream fout = new FileOutputStream("Student.dat");
+				ObjectOutputStream oout = new ObjectOutputStream(fout);
+				
+				Vector<Student> obj = (Vector<Student>) this.objects;
+				for(Student o : obj)
+				
+					oout.writeObject(o);
+				oout.close();
+				System.out.println("Saved");
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Error");
 
+			}
+			
+		}
     }
 
     @Override
     public void startUp() {
+    	if(this.objects!=null){
+			
+			
+			try {
+				FileInputStream fin = new FileInputStream("Student.dat");
+				ObjectInputStream oin = new ObjectInputStream(fin);
+				System.out.println(oin.available());
+//				  while (oin.available() > 0) {
+//			            int x = oin.readInt();
+//			            System.out.println(x);
+//			        }
+//				System.out.println(objects.size());
+//				 Vector<Student> LstStudent =  (Vector<Student>) oin.readObject();
 
+//				while(true){	
+//					LstStudent = new ArrayList<Student>();
+//					LstStudent.add((Student) oin.readObject());
+//					for(Student student: LstStudent){
+//						objects.add(student);
+//						System.out.println("addStudent");
+				oin.close();
+//					}			
+//				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
     }
 }

@@ -1,5 +1,7 @@
 package courseman2.model;
 
+import java.io.Serializable;
+
 import courseman2.NotPossibleException;
 
 /**
@@ -11,7 +13,7 @@ import courseman2.NotPossibleException;
  * @abstract_properties
  * mutable(departmentName)=true/\optional(departmentName)=false
  */
-public class ElectiveModules extends Modules {
+public class ElectiveModules extends Modules implements Serializable{
 	
 	private String departmentName;
 	
@@ -54,6 +56,6 @@ public class ElectiveModules extends Modules {
 	}
 	@Override
 	public String toString() {
-		return "Elective Modules :<c" + getCode() + "--" + getName() + "--" + getSemester() + "--" + getCredits() +"--" +departmentName+ ">";
+		return "Elective Modules :<" + getCode() + "--" + getName() + "--" + getSemester() + "--" + getCredits() +"--" +departmentName+ ">";
 	}
 }

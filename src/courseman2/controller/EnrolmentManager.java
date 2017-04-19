@@ -99,6 +99,7 @@ public class EnrolmentManager extends Manager{
 			jFrame.setSize(600,400);
 			jFrame.setLocationRelativeTo(null);
 			jFrame.setVisible(true);
+			gui.add(jFrame);
 		}
 		/**
 		 * @effect
@@ -155,7 +156,7 @@ public class EnrolmentManager extends Manager{
 		
 		//jpanel
         JPanel jPanelForMiddle = new JPanel();
-        jPanelForMiddle.setLayout(new GridLayout(5,2));
+        jPanelForMiddle.setLayout(new GridLayout(4,2));
         //add student
         jPanelForMiddle.add(studentLable);
         jPanelForMiddle.add(studentField);
@@ -171,45 +172,10 @@ public class EnrolmentManager extends Manager{
         
         gui.add(jPanelForMiddle);
 	}
-	private void btnOkClicked(ActionEvent event){
-				boolean ExamIsNum = true;
-				boolean InternalMarkisNum = true;
-				StringBuilder stb = new StringBuilder();
-				Modules modules = null;
-				Student student =null;
-				if(examField.getText().trim().length()==0){
-					String tmp = "\nWrong input value: Exam mark can not be blank";
-					stb.append(tmp);
-				}else {
-					for (int i=0;i<examField.getText().trim().length();i++){
-						if (Character.isLetter(examField.getText().charAt(i))){
-							ExamIsNum =false;
-							break;
-						}
-					}
-				}
-		        if (internalField.getText().trim().length()==0){
-					String tmp = "\nWrong input value:Internal mark can not be blank";
-					stb.append(tmp);
-				}else {
-		        	for (int i=0;i<internalField.getText().trim().length();i++){
-		        		if (Character.isLetter(internalField.getText().trim().charAt(i))){
-		        			InternalMarkisNum= false;
-		        			break;
-						}
-					}
-				}
-                if (stb.length()>0){
-		        	super.displayErrorMessage(stb.toString(),"Create an enrollment");
-				}else{
-				}
-	}
-    private void btnCancleClick(ActionEvent event){
-				this.exit();
-	}
+	
 	@Override
 	public void clearGUI() {
-
+		clearGUI((JPanel) gui.getContentPane());
 	}
 
 	@Override

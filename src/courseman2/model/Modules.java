@@ -1,4 +1,5 @@
 package courseman2.model;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import courseman2.NotPossibleException;
@@ -16,7 +17,7 @@ import courseman2.NotPossibleException;
  * mutable(semester)=true/\optional(semester)=false
  * mutable(credit)=true/\optional)credit)=false
  */
-public class Modules {
+public class Modules implements Serializable{
 	private String code;
 	private String name;
 	private int semester;
