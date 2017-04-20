@@ -1,4 +1,6 @@
 package courseman2.model;
+import java.io.Serializable;
+
 import courseman2.NotPossibleException;
 
 /** @overview An enrolment records a fact that a student has registered interest 
@@ -12,7 +14,8 @@ import courseman2.NotPossibleException;
  * @object A typical Enrollment is c=<s--m--i--e--f>, where Student(s), Modules(m), internalMark(i),
  * examinationMark(e),finalGrade(f)
  */
-public class Enrolment implements Comparable<Enrolment> {
+public class Enrolment implements Comparable<Enrolment>,Serializable {
+	
 	private Student student;
 	private Modules modules;
 	private float internalMark;

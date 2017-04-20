@@ -18,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -204,15 +205,14 @@ public class ModuleManager extends Manager{
     	if(this.objects!=null){
 			
 			try {
-				FileInputStream fin = new FileInputStream("Student.dat");
+				System.out.println("Start Up Modules");
+				FileInputStream fin = new FileInputStream("Modules.dat");
 				ObjectInputStream oin = new ObjectInputStream(fin);
-		
-				 System.out.println("Modules Start Up");
-					 Object obj = null;
-
-				 while((obj = oin.readObject()) != null){					
-					 objects.add(obj);					
-				 }
+				 List<Modules> LstModules =null;
+		            while(fin.available()>0){
+		            	LstModules = new ArrayList<Modules>();
+		            	LstModules.add((Modules)oin.readObject());
+		             }
 			} catch (EOFException ex) {  //This exception will be caught when EOF is reached
 	            System.out.println("End of file reached.");
 	        }

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -136,18 +137,15 @@ public class StudentManager extends Manager{
     	if(this.objects!=null){
 					
 			try {
+				System.out.println("Start Up Student");
 				FileInputStream fin = new FileInputStream("Student.dat");
 				ObjectInputStream oin = new ObjectInputStream(fin);
-				ArrayList<Student> LstStudent = new ArrayList<Student>();
-				 System.out.println("Student Start Up");
-					 Object obj = null;
-
-				 while((obj = oin.readObject()) != null){					
-					 objects.add(obj);					
-				 }
-			} catch (EOFException ex) {  //This exception will be caught when EOF is reached
-	            System.out.println("End of file reached.");
-	        }
+				  List<Student> LstStudent = null;
+		             while(fin.available()>0){
+		            	 LstStudent = new ArrayList<Student>();
+		            	 LstStudent.add((Student) oin.readObject());	                 
+		             }
+		             }
 	
 			 catch (Exception e) {
 				// TODO Auto-generated catch block

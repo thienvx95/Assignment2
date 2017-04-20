@@ -1,9 +1,12 @@
 package courseman2.model;
+
+import java.io.Serializable;
+
 /**
  * @overview Modules 
  * @object A typical compulsoryModules is c=<c--n--s--c>, where code(c), name(n), semester(s), credits(c)
  */	
-public class CompulsoryModules extends Modules{
+public class CompulsoryModules extends Modules implements Serializable{
 
 
 	/**
