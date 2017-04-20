@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,10 +16,13 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import java.util.HashMap;
+
+
 public class StudentManager extends Manager{
     private JLabel titleLable, nameLable,dobLable,addressLable,emailLable;
     private JTextField nameField,dobField,addressField,emailField;
-    private JButton okButton, cancleButton;
+    protected HashMap<String,Student> StudentMap = new HashMap<String,Student>();
 
     /**
      * @param title
@@ -36,68 +40,68 @@ public class StudentManager extends Manager{
 
     @Override
     protected void createMiddlePanel() {
-    nameLable = new JLabel("name");
-    dobLable = new JLabel("dob");
-    addressLable = new JLabel("Address");
-    emailLable = new JLabel("Email");
-    
-    
-    nameField = new JTextField();
-    dobField = new JTextField();
-    addressField = new JTextField();
-    emailField = new JTextField();
-    okButton = new JButton("ok");
-    cancleButton = new JButton("Cancle");
-    
-    JPanel jPanelForMiddle = new JPanel();
-    jPanelForMiddle.setLayout(new GridLayout(4,2));
-    jPanelForMiddle.add(nameLable);
-    jPanelForMiddle.add(nameField);
-    jPanelForMiddle.add(dobLable);
-    jPanelForMiddle.add(dobField);
-    jPanelForMiddle.add(addressLable);
-    jPanelForMiddle.add(addressField);
-    jPanelForMiddle.add(emailLable);
-    jPanelForMiddle.add(emailField);
-     gui.add(jPanelForMiddle,BorderLayout.CENTER);
+        nameLable = new JLabel("name");
+        dobLable = new JLabel("dob");
+        addressLable = new JLabel("Address");
+        emailLable = new JLabel("Email");
+
+
+        nameField = new JTextField();
+        dobField = new JTextField();
+        addressField = new JTextField();
+        emailField = new JTextField();
+
+        JPanel jPanelForMiddle = new JPanel();
+        jPanelForMiddle.setLayout(new GridLayout(4,2));
+        jPanelForMiddle.add(nameLable);
+        jPanelForMiddle.add(nameField);
+        jPanelForMiddle.add(dobLable);
+        jPanelForMiddle.add(dobField);
+        jPanelForMiddle.add(addressLable);
+        jPanelForMiddle.add(addressField);
+        jPanelForMiddle.add(emailLable);
+        jPanelForMiddle.add(emailField);
+        gui.add(jPanelForMiddle,BorderLayout.CENTER);
     }
 
     @Override
     public void clearGUI() {
- 
-    	clearGUI((JPanel) gui.getContentPane());
+
+        clearGUI((JPanel) gui.getContentPane());
     }
 
     @Override
     public Object createObject() throws NotPossibleException {
-    	Student student = null;
-        String messeage = "";
-        
+        Student student = null;
+        StringBuilder messeage = new StringBuilder();
+        boolean check = true;
+
         if(nameField.getText().trim().length()==0){
-            messeage+="\n Name field can not be blank";
-        }else
+            messeage.append("\n Name field can not be blank");
+            check= false;
+        }
         if (dobField.getText().trim().length()==0){
-            messeage+="\nDob can not be blank";
-        }else
+            messeage.append("\nDob can not be blank");
+            check= false;
+        }
         if (addressField.getText().trim().length()==0){
-            messeage+="\nAddress can not be blank";
-        }else
+            messeage.append("\nAddress can not be blank");
+            check= false;
+        }
         if (emailField.getText().trim().length()==0){
-            messeage+="\nEmail can not be blank";
-        } else {
-        	student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
-        	System.out.println(student.toString());
-        	objects.add(student);
+            messeage.append("\nEmail can not be blank");
+            check= false;
+        } 		
+        if (!check){
+            student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
+               objects.add(student);
+
         }
-		
-        if(messeage != ""){
-        	throw new NotPossibleException(messeage);        	
+
+        if(messeage.length()>0){
+            throw new NotPossibleException(messeage.toString());
         }
-         
         displayMessage("Create a " + student.toString(),"Create a Student");
-        
-        
-        
         return student;
     }
 

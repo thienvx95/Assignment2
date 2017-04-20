@@ -1,0 +1,11 @@
+18/04/2017:2:02PM
+Truong Minh Thuc
+dự định sử dụng array trong class controller/StudentManager để lưu trữ học sinh nếu người dùng nhập trên 2 lần
+>>>đổi hướng sang sử dụng hashmap để lưu trữ <K-V>
+>>>>>>với key là studentID và value là Student Object
+
+>>>Sử dụng Hashmap để lưu Module tương tự như student
+
+>>>bằng việc sử dụng hash map sau khi người dùng nhập các giá trị của trường trong enrolment thì nhân nút ok
+>>>>>>>với 2 trường student và module sẽ sử dụng key để gọi đối tượng rồi ghép vào contructor của enrolment
+-------------------------------------
