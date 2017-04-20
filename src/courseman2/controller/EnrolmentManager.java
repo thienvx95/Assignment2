@@ -93,24 +93,11 @@ public class EnrolmentManager extends Manager{
 			sort();
 			String[] header = {"No","Student ID","Student name","Module code","Module name"};
 			EasyTable table = new EasyTable(header);
-			 int newRowIndex = table.addRow();
-			 System.out.println(newRowIndex);
+		
 		        try {
-//		            FileInputStream fin = new FileInputStream("Enrolment.dat");
-//		            ObjectInputStream oin = new ObjectInputStream(fin);
-//		            List<Enrolment> enrol = new ArrayList<Enrolment>();
-//		            while(fin.available()>0){ 	
-//		                enrol.add((Enrolment)oin.readObject());
-//		                int a=1;            
-//		                for(Enrolment e:enrol){
-//		                   table.setValueAt(a++, newRowIndex, 0);
-//		                   table.setValueAt(e.getStudent().getId(), newRowIndex, 1);
-//		                   table.setValueAt(e.getStudent().getName(), newRowIndex, 2);
-//		                   table.setValueAt(e.getModules().getCode(), newRowIndex, 3);
-//		                   table.setValueAt(e.getModules().getName(), newRowIndex, 4);
-//		                }
-//		            }
+           
 		        	for(Object obj: objects){
+		        		int newRowIndex = table.addRow();
 		        		Enrolment e = (Enrolment) obj;
 		        		int a=1; 
 		        		 table.setValueAt(a++, newRowIndex, 0);
@@ -145,35 +132,21 @@ public class EnrolmentManager extends Manager{
 				
 				String[] header = {"No","Student ID","Module code","Internal mark","Exam mark","Final Grade"};
 				EasyTable table = new EasyTable(header);
-				 int newRowIndex = table.addRow();
-				 System.out.println(newRowIndex);
+			
 			        try {
 			        	for(Object obj: objects){
+			        		 int newRowIndex = table.addRow();
 			        		Enrolment e = (Enrolment) obj;
 			        		int a=1; 
 			        		 table.setValueAt(a++, newRowIndex, 0);
-			                   table.setValueAt(e.getStudent().getId(), newRowIndex, 1);
-			                   table.setValueAt(e.getStudent().getName(), newRowIndex, 2);
-			                   table.setValueAt(e.getModules().getCode(), newRowIndex, 3);
-			                   table.setValueAt(e.getModules().getName(), newRowIndex, 4);
-			        	}
-			        	
-			        	FileInputStream fin = new FileInputStream("Enrolment.dat");
-			            ObjectInputStream oin = new ObjectInputStream(fin);
-			            List<Enrolment> enrol = new ArrayList<Enrolment>();
-			            while(fin.available()>0){
-			                enrol.add((Enrolment)oin.readObject());
-			                int a=1;            
-			                for(Enrolment e:enrol){
-			                   table.setValueAt(a++, newRowIndex, 0);
 			                   table.setValueAt(e.getStudent().getId(), newRowIndex, 1);
 			                   table.setValueAt(e.getModules().getCode(), newRowIndex, 2);
 			                   table.setValueAt(e.getInternalMark(), newRowIndex, 3);
 			                   table.setValueAt(e.getExaminationMark(), newRowIndex, 4);
 			                   table.setValueAt(e.getFinalGrade(), newRowIndex, 5);
-			                }
-			            }
-			           
+			        	}
+			        	
+			        	
 			        } catch (Exception e) {
 			            e.printStackTrace();
 			        }
@@ -298,14 +271,17 @@ if(this.objects!=null){
 				System.out.println("Start Up Enrolment");
 				FileInputStream fin = new FileInputStream("Enrolment.dat");
 				ObjectInputStream oin = new ObjectInputStream(fin);
-				 List<Enrolment> LstEnrol =null;
-		            while(fin.available()>0){
-		            	LstEnrol = new ArrayList<Enrolment>();
-		            	LstEnrol.add((Enrolment)oin.readObject());		                
-		            }
-		            for(Enrolment enrol : LstEnrol){
-		            	objects.add(enrol);
-		            }
+		            ArrayList<Enrolment> LstEnrol = null;
+		            LstEnrol = new ArrayList<Enrolment>();		
+						int count = 0;
+			             while(fin.available()>0){		            	 
+			            	 Enrolment enrol = (Enrolment) oin.readObject();
+			            	 LstEnrol.add(count,enrol);
+			            	 count++;	        
+			             }	      
+			             for(Enrolment enrol : LstEnrol){
+			            	 objects.add(enrol);
+			             }
 			}
 	
 			 catch (Exception e) {

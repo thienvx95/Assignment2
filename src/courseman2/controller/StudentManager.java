@@ -152,21 +152,17 @@ public class StudentManager extends Manager{
 				FileInputStream fin = new FileInputStream("Student.dat");
 				ObjectInputStream oin = new ObjectInputStream(fin);
 				ArrayList<Student> LstStudent = null;
-
-		             while(fin.available()>0){
-		            	 System.out.println(fin.available());
-		            	 LstStudent = new ArrayList<Student>();		
+				LstStudent = new ArrayList<Student>();		
+					int count = 0;
+		             while(fin.available()>0){		            	 
 		            	 Student student = (Student) oin.readObject();
-		            	 LstStudent.add(student);
-		            	 System.out.println(student.getName());
-		            	 System.out.println(LstStudent.size());
-		            	 
-		             
-		             }
+		            	 LstStudent.add(count,student);
+		            	 count++;	        
+		             }	      
 		             for(Student st : LstStudent){
 		            	 objects.add(st);
 		             }
-		             System.out.println(objects.size());
+		         
 		             }
 	
 	

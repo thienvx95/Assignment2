@@ -223,14 +223,17 @@ public class ModuleManager extends Manager{
 				System.out.println("Start Up Modules");
 				FileInputStream fin = new FileInputStream("Modules.dat");
 				ObjectInputStream oin = new ObjectInputStream(fin);
-				 List<Modules> LstModules =null;
-		            while(fin.available()>0){
-		            	LstModules = new ArrayList<Modules>();
-		            	LstModules.add((Modules)oin.readObject());
-		             }
-		            for(Modules modules : LstModules){
-		            	objects.add(modules);
-		            }
+		            ArrayList<Modules> LstModules = null;
+		            LstModules = new ArrayList<Modules>();		
+						int count = 0;
+			             while(fin.available()>0){		            	 
+			            	 Modules modules = (Modules) oin.readObject();
+			            	 LstModules.add(count,modules);
+			            	 count++;	        
+			             }	      
+			             for(Modules modules : LstModules){
+			            	 objects.add(modules);
+			             }
 		            
 			} 
 	
