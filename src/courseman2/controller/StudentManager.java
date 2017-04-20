@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class StudentManager extends Manager{
@@ -45,7 +46,6 @@ public class StudentManager extends Manager{
         addressLable = new JLabel("Address");
         emailLable = new JLabel("Email");
 
-
         nameField = new JTextField();
         dobField = new JTextField();
         addressField = new JTextField();
@@ -62,6 +62,7 @@ public class StudentManager extends Manager{
         jPanelForMiddle.add(emailLable);
         jPanelForMiddle.add(emailField);
         gui.add(jPanelForMiddle,BorderLayout.CENTER);
+        
     }
 
     @Override
@@ -91,11 +92,11 @@ public class StudentManager extends Manager{
         if (emailField.getText().trim().length()==0){
             messeage.append("\nEmail can not be blank");
             check= false;
-        } 		
-        if (!check){
+        } 
+        System.out.println(check);
+        if (check){
             student = new Student(nameField.getText().trim(),dobField.getText().trim(),addressField.getText().trim(),emailField.getText().trim());
                objects.add(student);
-
         }
 
         if(messeage.length()>0){
@@ -133,30 +134,22 @@ public class StudentManager extends Manager{
     @Override
     public void startUp() {
     	if(this.objects!=null){
-			
-			
+					
 			try {
 				FileInputStream fin = new FileInputStream("Student.dat");
 				ObjectInputStream oin = new ObjectInputStream(fin);
-				System.out.println(oin.available());
-//				  while (oin.available() > 0) {
-//			            int x = oin.readInt();
-//			            System.out.println(x);
-//			        }
-//				System.out.println(objects.size());
-//				 Vector<Student> LstStudent =  (Vector<Student>) oin.readObject();
+				ArrayList<Student> LstStudent = new ArrayList<Student>();
+				 System.out.println("Student Start Up");
+					 Object obj = null;
 
-//				while(true){	
-//					LstStudent = new ArrayList<Student>();
-//					LstStudent.add((Student) oin.readObject());
-//					for(Student student: LstStudent){
-//						objects.add(student);
-//						System.out.println("addStudent");
-				oin.close();
-//					}			
-//				}
-				
-			} catch (Exception e) {
+				 while((obj = oin.readObject()) != null){					
+					 objects.add(obj);					
+				 }
+			} catch (EOFException ex) {  //This exception will be caught when EOF is reached
+	            System.out.println("End of file reached.");
+	        }
+	
+			 catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

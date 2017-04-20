@@ -4,9 +4,16 @@ package courseman2.controller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 
 import courseman2.NotPossibleException;
 import courseman2.model.Modules;
@@ -218,11 +225,52 @@ public class EnrolmentManager extends Manager{
 
 	@Override
 	public void save() {
+		if(this.objects!=null){
+    		System.out.println(this.objects.size());
+			try {
+				FileOutputStream fout = new FileOutputStream("Enrolment.dat");
+				ObjectOutputStream oout = new ObjectOutputStream(fout);
+				
+				Vector<Enrolment> obj = (Vector<Enrolment>) this.objects;
+				for(Enrolment o : obj)
+				
+					oout.writeObject(o);
+				oout.close();
+				System.out.println("Saved");
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Error");
+
+			}
+			
+		}
 
 	}
 
 	@Override
 	public void startUp() {
+if(this.objects!=null){
+			
+			try {
+				FileInputStream fin = new FileInputStream("Enrolment.dat");
+				ObjectInputStream oin = new ObjectInputStream(fin);
+				ArrayList<Enrolment> LstEnrolment = new ArrayList<Enrolment>();
+				 System.out.println("Enrolment Start Up");
+					 Object obj = null;
 
+				 while((obj = oin.readObject()) != null){					
+					 objects.add(obj);					
+				 }
+			} catch (EOFException ex) {  //This exception will be caught when EOF is reached
+	            System.out.println("End of file reached.");
+	        }
+	
+			 catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

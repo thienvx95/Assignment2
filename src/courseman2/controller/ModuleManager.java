@@ -10,7 +10,15 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 import javax.swing.*;
 
@@ -147,15 +155,14 @@ public class ModuleManager extends Manager{
         	modules = new ElectiveModules(nameField.getText().trim(), Integer.parseInt(semesterField.getText()), Integer.parseInt(creditsField.getText()), deptNameField.getText().trim());
         } else if(moduleBox.getSelectedItem().equals("Compulsory")){
         	modules = new CompulsoryModules(nameField.getText().trim(),Integer.parseInt(semesterField.getText()),Integer.parseInt(creditsField.getText()));
-
+        	objects.add(modules);
 
         } else if(moduleBox.getSelectedItem().equals("Compulsory")){
         	modules = new Modules(nameField.getText().trim(),Integer.parseInt(semesterField.getText()),Integer.parseInt(creditsField.getText()));
         	ModuleMap.put(modules.getCode(),modules);
-
+        	objects.add(modules);
         }
-
-
+        
         if(messeage.length()>0){
         	throw new NotPossibleException(messeage.toString());
         }
@@ -169,11 +176,51 @@ public class ModuleManager extends Manager{
 
     @Override
     public void save() {
+    	if(this.objects!=null){
+    		System.out.println(this.objects.size());
+			try {
+				FileOutputStream fout = new FileOutputStream("Modules.dat");
+				ObjectOutputStream oout = new ObjectOutputStream(fout);
+				
+				Vector<Modules> obj = (Vector<Modules>) this.objects;
+				for(Modules o : obj)
+				
+					oout.writeObject(o);
+				oout.close();
+				System.out.println("Saved");
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Error");
 
+			}
+			
+		}
     }
 
     @Override
     public void startUp() {
+    	if(this.objects!=null){
+			
+			try {
+				FileInputStream fin = new FileInputStream("Student.dat");
+				ObjectInputStream oin = new ObjectInputStream(fin);
+		
+				 System.out.println("Modules Start Up");
+					 Object obj = null;
 
+				 while((obj = oin.readObject()) != null){					
+					 objects.add(obj);					
+				 }
+			} catch (EOFException ex) {  //This exception will be caught when EOF is reached
+	            System.out.println("End of file reached.");
+	        }
+	
+			 catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
     }
 }
