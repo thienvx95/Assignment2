@@ -3,6 +3,7 @@ package courseman2.controller;
 import courseman2.NotPossibleException;
 import courseman2.model.CompulsoryModules;
 import courseman2.model.ElectiveModules;
+
 import courseman2.model.Modules;
 import courseman2.model.Student;
 
@@ -14,6 +15,7 @@ import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -51,6 +53,18 @@ public class ModuleManager extends Manager{
     public ModuleManager(String title, String titleText, int width, int height, int x, int y) {
         super(title, titleText, width, height, x, y);
     }
+   
+    public Modules getModuleByCode(String code) {
+		Modules modules = null;
+		System.out.println(objects.toString());
+		for (Object obj : objects) {
+			Modules t = (Modules) obj;
+			if (t.getCode().equalsIgnoreCase(code)) {
+				modules = t;
+			}
+		}
+		return modules;
+	}
 
     @Override
     protected void createMiddlePanel() {
@@ -184,10 +198,11 @@ public class ModuleManager extends Manager{
 				ObjectOutputStream oout = new ObjectOutputStream(fout);
 				
 				Vector<Modules> obj = (Vector<Modules>) this.objects;
-				for(Modules o : obj)
-				
+				for(Modules o : obj){
 					oout.writeObject(o);
+				}
 				oout.close();
+				
 				System.out.println("Saved");
 				
 			} catch (IOException e) {
@@ -213,13 +228,16 @@ public class ModuleManager extends Manager{
 		            	LstModules = new ArrayList<Modules>();
 		            	LstModules.add((Modules)oin.readObject());
 		             }
-			} catch (EOFException ex) {  //This exception will be caught when EOF is reached
-	            System.out.println("End of file reached.");
-	        }
+		            for(Modules modules : LstModules){
+		            	objects.add(modules);
+		            }
+		            
+			} 
 	
 			 catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				 e.printStackTrace();
+				 System.err.println("Can't open file or not found");
 			}
 		}
     }

@@ -9,3 +9,9 @@ dự định sử dụng array trong class controller/StudentManager để lưu 
 >>>bằng việc sử dụng hash map sau khi người dùng nhập các giá trị của trường trong enrolment thì nhân nút ok
 >>>>>>>với 2 trường student và module sẽ sử dụng key để gọi đối tượng rồi ghép vào contructor của enrolment
 -------------------------------------
+12/04/2017:00:02PM
+Vu Xuan Thien
+>>>> viết 2 class getStudentByID và getModulesByID trong 2 StudentManager và ModuleManager để lấy được Student và Modules
+cho model Enrolment(student,enrolment)) khi create object
+>>>  getStudentByID và getModulesByID nhập ID và  return Student or Modules
+>>> start_up đọc file lưu dữ liệu ra list r đẩy vào objects

@@ -39,6 +39,17 @@ public class StudentManager extends Manager{
     public StudentManager(String title, String titleText, int width, int height, int x, int y) {
         super(title, titleText, width, height, x, y);
     }
+    public Student getStudentByID(String id) throws NullPointerException{
+		Student student = null;
+		for(Object obj : objects){
+			Student t = (Student) obj;
+			if(t.getId().equalsIgnoreCase(id)){
+				student=t;
+			}
+		}
+		return student;
+	}
+
 
     @Override
     protected void createMiddlePanel() {
@@ -116,9 +127,9 @@ public class StudentManager extends Manager{
 				ObjectOutputStream oout = new ObjectOutputStream(fout);
 				
 				Vector<Student> obj = (Vector<Student>) this.objects;
-				for(Student o : obj)
-				
+				for(Student o : obj){				
 					oout.writeObject(o);
+				}
 				oout.close();
 				System.out.println("Saved");
 				
@@ -140,16 +151,29 @@ public class StudentManager extends Manager{
 				System.out.println("Start Up Student");
 				FileInputStream fin = new FileInputStream("Student.dat");
 				ObjectInputStream oin = new ObjectInputStream(fin);
-				  List<Student> LstStudent = null;
+				ArrayList<Student> LstStudent = null;
+
 		             while(fin.available()>0){
-		            	 LstStudent = new ArrayList<Student>();
-		            	 LstStudent.add((Student) oin.readObject());	                 
+		            	 System.out.println(fin.available());
+		            	 LstStudent = new ArrayList<Student>();		
+		            	 Student student = (Student) oin.readObject();
+		            	 LstStudent.add(student);
+		            	 System.out.println(student.getName());
+		            	 System.out.println(LstStudent.size());
+		            	 
+		             
 		             }
+		             for(Student st : LstStudent){
+		            	 objects.add(st);
 		             }
+		             System.out.println(objects.size());
+		             }
+	
 	
 			 catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Can't open file or not found");
+				 e.printStackTrace();
 			}
 		}
     }

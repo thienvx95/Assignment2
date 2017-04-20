@@ -44,7 +44,11 @@ public class EnrolmentManager extends Manager{
 	public EnrolmentManager(String title, String titleText, int width, int height, int x, int y) {
 		super(title, titleText, width, height, x, y);
 	}
-
+	public EnrolmentManager(String title, String titleText, int width, int height, int x, int y,ModuleManager modules,StudentManager student) {
+		super(title, titleText, width, height, x, y);
+		this.moduleManager = modules;
+		this.studentManager = student;	
+	}
 	/**
 	 * @effec
 	 * add Enrolment
@@ -87,25 +91,34 @@ public class EnrolmentManager extends Manager{
 		 */
 		public void report(){
 			sort();
-			String[] header = {"No","Student","Student name","Module code","Module name"};
+			String[] header = {"No","Student ID","Student name","Module code","Module name"};
 			EasyTable table = new EasyTable(header);
 			 int newRowIndex = table.addRow();
+			 System.out.println(newRowIndex);
 		        try {
-		            FileInputStream i = new FileInputStream("Enrolment.dat");
-		            ObjectInputStream oi = new ObjectInputStream(i);
-		            List<Enrolment> enrol = new ArrayList<Enrolment>();
-		            while(i.available()>0){
-		                enrol.add((Enrolment)oi.readObject());
-		                int a=1;            
-		                for(Enrolment e:enrol){
-		                   table.setValueAt(a++, newRowIndex, 0);
-		                   table.setValueAt(e.getStudent(), newRowIndex, 1);
-		                   table.setValueAt(e.getModules(), newRowIndex, 2);
-		                   table.setValueAt(e.getInternalMark(), newRowIndex, 3);
-		                   table.setValueAt(e.getExaminationMark(), newRowIndex, 4);
-		                   table.setValueAt(e.getFinalGrade(), newRowIndex, 5);
-		                }
-		            }
+//		            FileInputStream fin = new FileInputStream("Enrolment.dat");
+//		            ObjectInputStream oin = new ObjectInputStream(fin);
+//		            List<Enrolment> enrol = new ArrayList<Enrolment>();
+//		            while(fin.available()>0){ 	
+//		                enrol.add((Enrolment)oin.readObject());
+//		                int a=1;            
+//		                for(Enrolment e:enrol){
+//		                   table.setValueAt(a++, newRowIndex, 0);
+//		                   table.setValueAt(e.getStudent().getId(), newRowIndex, 1);
+//		                   table.setValueAt(e.getStudent().getName(), newRowIndex, 2);
+//		                   table.setValueAt(e.getModules().getCode(), newRowIndex, 3);
+//		                   table.setValueAt(e.getModules().getName(), newRowIndex, 4);
+//		                }
+//		            }
+		        	for(Object obj: objects){
+		        		Enrolment e = (Enrolment) obj;
+		        		int a=1; 
+		        		 table.setValueAt(a++, newRowIndex, 0);
+		                   table.setValueAt(e.getStudent().getId(), newRowIndex, 1);
+		                   table.setValueAt(e.getStudent().getName(), newRowIndex, 2);
+		                   table.setValueAt(e.getModules().getCode(), newRowIndex, 3);
+		                   table.setValueAt(e.getModules().getName(), newRowIndex, 4);
+		        	}
 		           
 		        } catch (Exception e) {
 		            e.printStackTrace();
@@ -129,28 +142,49 @@ public class EnrolmentManager extends Manager{
 		 */
 			public void reportAssessment() {
 				sort();
-				String[] header = {"No","Student ID","Module Code","Internal Mark","Exam Mark","Final Grade"};
-				List<List> list_return = new ArrayList();
-				int i=1;
-				for(Enrolment enrolment : list) {
-					List tmpList = new ArrayList();
-					tmpList.add(i);
-					i++;
-					tmpList.add(enrolment.getStudent().getId());
-					tmpList.add(enrolment.getModules().getCode());
-					tmpList.add(enrolment.getInternalMark());
-					tmpList.add(enrolment.getExaminationMark());
-					tmpList.add(enrolment.getFinalGrade());
-					list_return.add(tmpList);
-				}
-				EasyTable table = new EasyTable(list_return,header);
-//				JFrame jFrame = new JFrame("List of the assessed enrollments");
-//				jFrame.setLayout(new BorderLayout());
-//				jFrame.getContentPane().add(table.getTableHeader(),BorderLayout.PAGE_START);
-//				jFrame.getContentPane().add(table,BorderLayout.CENTER);
-//				jFrame.setLocationRelativeTo(null);
-//				jFrame.setSize(600,400);
-//				jFrame.setVisible(true);
+				
+				String[] header = {"No","Student ID","Module code","Internal mark","Exam mark","Final Grade"};
+				EasyTable table = new EasyTable(header);
+				 int newRowIndex = table.addRow();
+				 System.out.println(newRowIndex);
+			        try {
+			        	for(Object obj: objects){
+			        		Enrolment e = (Enrolment) obj;
+			        		int a=1; 
+			        		 table.setValueAt(a++, newRowIndex, 0);
+			                   table.setValueAt(e.getStudent().getId(), newRowIndex, 1);
+			                   table.setValueAt(e.getStudent().getName(), newRowIndex, 2);
+			                   table.setValueAt(e.getModules().getCode(), newRowIndex, 3);
+			                   table.setValueAt(e.getModules().getName(), newRowIndex, 4);
+			        	}
+			        	
+			        	FileInputStream fin = new FileInputStream("Enrolment.dat");
+			            ObjectInputStream oin = new ObjectInputStream(fin);
+			            List<Enrolment> enrol = new ArrayList<Enrolment>();
+			            while(fin.available()>0){
+			                enrol.add((Enrolment)oin.readObject());
+			                int a=1;            
+			                for(Enrolment e:enrol){
+			                   table.setValueAt(a++, newRowIndex, 0);
+			                   table.setValueAt(e.getStudent().getId(), newRowIndex, 1);
+			                   table.setValueAt(e.getModules().getCode(), newRowIndex, 2);
+			                   table.setValueAt(e.getInternalMark(), newRowIndex, 3);
+			                   table.setValueAt(e.getExaminationMark(), newRowIndex, 4);
+			                   table.setValueAt(e.getFinalGrade(), newRowIndex, 5);
+			                }
+			            }
+			           
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        }
+			        JScrollPane scroll = new JScrollPane(table);
+				
+
+				JFrame jFrame = new JFrame("List of the assessed Enrollments");
+				jFrame.setSize(600,400);
+				jFrame.setLocation(300, 300);
+				jFrame.setVisible(true);
+				jFrame.add(scroll);
 			}
 		/**
 		 * @effect
@@ -203,49 +237,45 @@ public class EnrolmentManager extends Manager{
 	@Override
 	public Object createObject() throws NotPossibleException {
 		Enrolment enrolment =null;
-//		String messeage = "";
-//		if (studentField.getText().trim().length()==0){
-//			messeage+="\n Student ID can not be blank";
-//		}
-//		if (moduleField.getText().trim().length()==0){
-//			messeage+="\n Module id can not be blank";
-//		}
-//		if (internalField.getText().trim().length()==0){
-//			messeage+="\n Internal Mark can not be blank";
-//		}
-//		if (examField.getText().trim().length()==0){
-//			messeage+="\n Exam Mark can not be blank";
-//		}
-//		if (messeage.length()!=0){
-//			throw  new NotPossibleException(messeage);
-//		}else {
-//			enrolment = new Enrolment(
-//					studentManager.StudentMap.get(studentField.getText().trim()),
-//							moduleManager.ModuleMap.get(moduleField.getText().trim()));
-		
-//		}
-		enrolment = new Enrolment(new Student(studentField.getText().trim(), "a", "a", "a"),new Modules(moduleField.getText(), 1, 1));
-		enrolment.setInternalMark(Float.parseFloat(internalField.getText()));
-		enrolment.setExaminationMark(Float.parseFloat(examField.getText()));
+		String messeage = "";
+		if (moduleField.getText().trim().length()==0){
+			messeage+="\n Module id can not be blank";
+		}
+		if (internalField.getText().trim().length()==0){
+			messeage+="\n Internal Mark can not be blank";
+		}
+		if (examField.getText().trim().length()==0){
+			messeage+="\n Exam Mark can not be blank";
+		}
+		if (messeage.length()!=0){
+			throw  new NotPossibleException(messeage);
+		}
+		if (studentField.getText().trim().length()==0){
+		messeage+="\n Student ID can not be blank";
+		} else{		
+			Student student = studentManager.getStudentByID(studentField.getText());
+			Modules modules = moduleManager.getModuleByCode(moduleField.getText());
+				enrolment = new Enrolment(student,modules);
+				enrolment.setInternalMark(Float.parseFloat(internalField.getText()));
+				enrolment.setExaminationMark(Float.parseFloat(examField.getText()));
+				objects.add(enrolment);
+		}
+
 		displayMessage("Created an enrollment","Enrollment Create");
-		objects.add(enrolment);
+		
 		return enrolment;
 	}
 
 	@Override
 	public void save() {
 		if(this.objects!=null){
-    		System.out.println(this.objects.size());
 			try {
 				FileOutputStream fout = new FileOutputStream("Enrolment.dat");
-				ObjectOutputStream oout = new ObjectOutputStream(fout);
-				
+				ObjectOutputStream oout = new ObjectOutputStream(fout);				
 				Vector<Enrolment> obj = (Vector<Enrolment>) this.objects;
-				
-				System.out.println(objects.get(0));
-				for(Enrolment o : obj)
-				
+				for(Enrolment o : obj){		
 					oout.writeObject(o);
+				}
 				oout.close();
 				System.out.println("Saved");
 				
@@ -271,16 +301,17 @@ if(this.objects!=null){
 				 List<Enrolment> LstEnrol =null;
 		            while(fin.available()>0){
 		            	LstEnrol = new ArrayList<Enrolment>();
-		            	LstEnrol.add((Enrolment)oin.readObject());
-		                
+		            	LstEnrol.add((Enrolment)oin.readObject());		                
 		            }
-			} catch (EOFException ex) {  //This exception will be caught when EOF is reached
-	            System.out.println("End of file reached.");
-	        }
+		            for(Enrolment enrol : LstEnrol){
+		            	objects.add(enrol);
+		            }
+			}
 	
 			 catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				 System.err.println("Can't open file or not found");
+				 e.printStackTrace();
 			}
 		}
 	}

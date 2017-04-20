@@ -85,7 +85,7 @@ public class CourseManDemo implements ActionListener {
 	    createGUI();
 	    sman = new StudentManager("Manage Student", "Enter Student Details", 500, 300, 300, 200);
 	    mman = new ModuleManager("Manage Modules", "Enter Modules Details",500, 300, 300, 200);
-	    eman = new EnrolmentManager("Manage Enrolment", "Enter Enrolment Details",500, 300, 300, 200);
+	    eman = new EnrolmentManager("Manage Enrolment", "Enter Enrolment Details",500, 300, 300, 200,mman,sman);
 	    lhelper = new LogoHelper();
 	  
   }
@@ -248,7 +248,7 @@ public class CourseManDemo implements ActionListener {
 		  eman.display();
 	  }else if (actions.equals("Initial enrolment report")){
 		  eman.report();
-	  }else if (actions.equals("Assessment report")){
+	  }else if (actions.equals("Assessed report")){
 		  eman.reportAssessment();
 	  }else if (actions.equals("Save")){
 		  save();
