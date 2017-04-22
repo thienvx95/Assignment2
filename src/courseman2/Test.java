@@ -1,6 +1,7 @@
 package courseman2;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -8,17 +9,29 @@ import java.awt.event.KeyEvent;
  * Created by minhthuc on 4/4/2017.
  */
 public class Test {
-    public static void main(String[] args) {
-        JFrame jf = new JFrame();
-        JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("File");
-        file.setMnemonic(KeyEvent.VK_F);
-        JMenuItem item = new JMenuItem("exit");
-        item.setMnemonic(KeyEvent.VK_E);
-        item.setToolTipText("Exit the application");
-        item.addActionListener((ActionEvent event)->System.exit(0));
-        file.add(item);
-        menuBar.add(file);
-        jf.setJMenuBar(menuBar);
+    public static void main(String[] args) throws InterruptedException {
+        JFrame jFrame = new JFrame();
+        jFrame.setSize(100, 200);
+
+        JPanel jPanel = new JPanel();
+        jFrame.add(jPanel);
+        jFrame.setVisible(true);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    try {
+                        jPanel.setBackground(Color.BLUE);
+                        Thread.sleep(1000);
+                        jPanel.setBackground(Color.RED);
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        break;
+                    }
+                }
+            }
+        }).start();
+
     }
 }

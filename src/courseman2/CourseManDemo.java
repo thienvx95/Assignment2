@@ -22,6 +22,7 @@ import courseman2.controller.StudentManager;
 
 import static java.awt.Font.CENTER_BASELINE;
 import static java.awt.Font.SERIF;
+import static java.awt.SystemColor.text;
 
 /**
  * @overview Represents the main class of the CourseMan program. 
@@ -80,13 +81,12 @@ public class CourseManDemo implements ActionListener {
    *    those of mainGUI
    *  initialise lhelper  
    */
-  public CourseManDemo(String initial){
+  public CourseManDemo(String initial) throws InterruptedException {
 		this.initial = initial;
 	    createGUI();
 	    sman = new StudentManager("Manage Student", "Enter Student Details", 500, 300, 300, 200);
 	    mman = new ModuleManager("Manage Modules", "Enter Modules Details",500, 300, 300, 200);
 	    eman = new EnrolmentManager("Manage Enrolment", "Enter Enrolment Details",500, 300, 300, 200,mman,sman);
-	    lhelper = new LogoHelper();
 	  
   }
 
@@ -103,7 +103,7 @@ public class CourseManDemo implements ActionListener {
    *     
    *   The action listener of the menu items is this.
    */
-  protected void createGUI(){
+  protected void createGUI() throws InterruptedException {
 	  mainGUI = new JFrame("Program CourseManDemo");
 	  mainGUI.setSize(500, 100);
 	  mainGUI.setLocation(300, 200);
@@ -173,16 +173,39 @@ public class CourseManDemo implements ActionListener {
    *
    *  The logo text must have the "appearing" effect.
    */
-  private void createLogoPanel(JMenuBar mb, String initial){
+  private void createLogoPanel(JMenuBar mb, String initial) throws InterruptedException {
 	  JLabel text = new JLabel(initial,JLabel.CENTER);
-	  text.setBackground(Color.orange);
+
 	  text.setOpaque(true);
-	  text.setForeground(Color.BLUE);
+	  new Thread(new Runnable() {
+		  @Override
+		  public void run() {
+			  while (true){
+
+				  try {
+					  Thread.sleep(1000);
+					  text.setBackground(Color.orange);
+					  text.setForeground(Color.BLUE);
+
+
+					  Thread.sleep(1000);
+					  text.setBackground(Color.white);
+					  text.setForeground(Color.black);
+				  } catch (InterruptedException e) {
+					  e.printStackTrace();
+					  break;
+				  }
+
+			  }
+		  }
+	  }).start();
+
 	  text.setFont(new Font("Serif",1, 18));
 	  text.setSize(10, 20);
 	  text.setAlignmentX(1);
-	  text.setFocusable(false);  
+	  text.setFocusable(false);
 	  mb.add(text);
+
   }
   
   /**
@@ -266,7 +289,7 @@ public class CourseManDemo implements ActionListener {
    *  {@link #startUp()}: start up the CourseManDemo instance
    *  {@link #display()}: display the main gui of CourseManDemo instance 
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     final String initial = "VXT - TMT";
     CourseManDemo app = new CourseManDemo(initial);
 
